@@ -24,6 +24,8 @@ public class Main extends JFrame implements ActionListener {
     JLabel jLabel3;
     JLabel jLabel4;
 
+    JLabel jImageIcon;
+
     //Initializing JLabel
     JTextField username;
     JTextField password;
@@ -35,7 +37,6 @@ public class Main extends JFrame implements ActionListener {
 
     //Initializing JButton
     JRadioButton administratorButton;
-
     JRadioButton studentButton;
 
     //Initializing ButtonGroup
@@ -45,15 +46,20 @@ public class Main extends JFrame implements ActionListener {
     public Main() {
 
         //Adding variable initialized above in the JFrame
-        imageIcon = new ImageIcon("");
+        imageIcon = new ImageIcon("collegeLogo/texas-logo.png");
+
+        jImageIcon = new JLabel(imageIcon);
+        jImageIcon.setHorizontalTextPosition(JLabel.CENTER);
+        jImageIcon.setVerticalTextPosition(JLabel.BOTTOM);
+        jImageIcon.setBounds(485, 50, 440, 300);
+
 
         jLabel1 = new JLabel("Library Management System");
-        jLabel1.setIcon(imageIcon);
         jLabel1.setHorizontalTextPosition(JLabel.CENTER);
         jLabel1.setVerticalTextPosition(JLabel.BOTTOM);
         jLabel1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         jLabel1.setIconTextGap(20);
-        jLabel1.setBounds(600, 50, 440, 300);
+        jLabel1.setBounds(625, 300, 250, 50);
 
         jLabel2 = new JLabel("Login as");
         jLabel2.setBounds(700, 340, 100, 50);
@@ -78,11 +84,11 @@ public class Main extends JFrame implements ActionListener {
         changeButton.addActionListener(this);
 
         loginButton = new JButton("Log In");
-        loginButton.setBounds(700, 550, 100, 30);
+        loginButton.setBounds(795, 550, 100, 30);
         loginButton.addActionListener(this);
 
         registerButton = new JButton("Sign up");
-        registerButton.setBounds(795, 550, 100, 30);
+        registerButton.setBounds(700, 550, 100, 30);
         registerButton.setVisible(false);
         registerButton.addActionListener(this);
 
@@ -101,13 +107,13 @@ public class Main extends JFrame implements ActionListener {
         //Making JFrame
         this.setTitle("Library Management System");
         this.setVisible(true);
-        this.setSize(800, 800);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(new Color(199, 219, 249));
-        this.setIconImage(imageIcon.getImage());
 
         //Adding the variable declared above in the JFrame
+        this.add(jImageIcon);
         this.add(jLabel1);
         this.add(jLabel2);
         this.add(jLabel3);
@@ -172,8 +178,7 @@ public class Main extends JFrame implements ActionListener {
                         //Calling Administrator Class
                         new Administrator();
 
-                    }
-                    else if (studentButton.isSelected()) {
+                    } else if (studentButton.isSelected()) {
                         student = username.getText();
                         this.dispose();
                         //Calling Student Class
@@ -195,7 +200,7 @@ public class Main extends JFrame implements ActionListener {
         } else if (e.getSource() == changeButton) {
 
             this.dispose();
-            //Calling Changepassword Class
+            //Calling ChangePassword Class
             new Changepassword();
 
         } else if (studentButton.isSelected()) {

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Method;
 import java.sql.*;
 
 //Building Classes
@@ -40,7 +41,7 @@ public class Changepassword extends JFrame implements ActionListener {
         label1.setHorizontalTextPosition(JLabel.CENTER);
         label1.setVerticalTextPosition(JLabel.BOTTOM);
         label1.setIconTextGap(20);
-        label1.setBounds(500, 30, 450, 250);
+        label1.setBounds(525, 30, 450, 250);
         label1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 
         label2 = new JLabel("Select User: ");
@@ -78,7 +79,7 @@ public class Changepassword extends JFrame implements ActionListener {
 
         this.setVisible(true);
         this.setTitle("Change Password");
-        this.setSize(800, 800);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(new Color(199, 219, 249));
@@ -97,6 +98,7 @@ public class Changepassword extends JFrame implements ActionListener {
         back();
         main.dispose();
     }
+
     void back() {
 
         backButton = new JButton("Back");
@@ -105,6 +107,8 @@ public class Changepassword extends JFrame implements ActionListener {
         this.add(backButton);
 
     }
+    Method refresh = null;
+
     //    method to fetch user content from database
     void userCombobox() {
 
@@ -129,6 +133,7 @@ public class Changepassword extends JFrame implements ActionListener {
         }
 
     }
+
     //    method to Update password from database
     void setChangePassword() {
         try {
@@ -136,10 +141,10 @@ public class Changepassword extends JFrame implements ActionListener {
             String rSql = "SELECT * FROM `login` ";
             String sql = "UPDATE `login` SET `password`= '" + newPassword.getText() + "' WHERE username = '" + username.getText() + "'&& password = '" + oldPassword.getText() + "'&& user = '" + userBox.getSelectedItem() + "';";
             String message = "Password changed successfully";
-            database.dbExecution(rSql, sql, message);
+            database.dbExecution(rSql, sql, message,refresh);
         } catch (Exception e2) {
 
-            JOptionPane.showMessageDialog(this, e2.getMessage());
+            e2.printStackTrace();
 
         }
     }
@@ -170,12 +175,12 @@ public class Changepassword extends JFrame implements ActionListener {
                 con.close();
             } catch (Exception e1) {
 
-                JOptionPane.showMessageDialog(this, e1.getMessage());
+                e1.printStackTrace();
 
 
             }
 
-        }else if (e.getSource() == backButton) {
+        } else if (e.getSource() == backButton) {
 
             this.dispose();
             new Main();

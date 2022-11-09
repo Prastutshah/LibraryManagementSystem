@@ -44,7 +44,7 @@ public class StudentSignup extends JFrame implements ActionListener {
         label1.setHorizontalTextPosition(JLabel.CENTER);
         label1.setVerticalTextPosition(JLabel.BOTTOM);
         label1.setIconTextGap(20);
-        label1.setBounds(500, 30, 450, 250);
+        label1.setBounds(485, 30, 450, 250);
         label1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 
         label2 = new JLabel("Enter your Name: ");
@@ -60,7 +60,7 @@ public class StudentSignup extends JFrame implements ActionListener {
         username.setBounds(610, 350, 100, 20);
 
         label4 = new JLabel("@texascollege.edu.np");
-        label4.setBounds(710,350,150,20);
+        label4.setBounds(710, 350, 150, 20);
 
         label5 = new JLabel("Password: ");
         label5.setBounds(500, 400, 100, 20);
@@ -82,7 +82,7 @@ public class StudentSignup extends JFrame implements ActionListener {
 
         this.setVisible(true);
         this.setTitle("Register Student");
-        this.setSize(800, 800);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(new Color(199, 219, 249));
@@ -121,6 +121,7 @@ public class StudentSignup extends JFrame implements ActionListener {
         this.add(backButton);
 
     }
+
     //    method to fetch course  content from database
     void facultyCombobox() {
 
@@ -159,32 +160,39 @@ public class StudentSignup extends JFrame implements ActionListener {
 
                 JOptionPane.showMessageDialog(this, "Faculty Field is Empty");
 
+            } else if (password.getText().equals("")) {
+
+                JOptionPane.showMessageDialog(this, "Password field is Empty");
+
             } else {
+                if (facultyBox.getSelectedItem().equals("-----Select-----")) {
 
-                try {
+                    JOptionPane.showMessageDialog(this, "Please select faculty");
 
-                    String rSql = "SELECT * FROM `login`;";
-                    String sql = "INSERT INTO `login` (`name`, `username`, `password`, `user`, `faculty`) VALUES ('" + name.getText() + "','" + username.getText()+ "@texascollege.edu.np','" + password.getText() + "','student','" + facultyBox.getSelectedItem() + "')";
-                    String message = " " + username.getText() + " Account Created Successfully";
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarymanagementsystem", "root", "");
+                } else {
+                    try {
 
-                    Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery(rSql);
+                        String rSql = "SELECT * FROM `login`;";
+                        String sql = "INSERT INTO `login` (`name`, `username`, `password`, `user`, `faculty`) VALUES ('" + name.getText() + "','" + username.getText() + "@texascollege.edu.np','" + password.getText() + "','student','" + facultyBox.getSelectedItem() + "')";
+                        String message = " " + username.getText() + " Account Created Successfully";
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/librarymanagementsystem", "root", "");
 
-                    while (rs.next()) {
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery(rSql);
 
-                        st.executeUpdate(sql);
-                        JOptionPane.showMessageDialog(this, message);
+                        while (rs.next()) {
 
+                            st.executeUpdate(sql);
+                            JOptionPane.showMessageDialog(this, message);
+
+                        }
+                        con.close();
+
+
+                    } catch (Exception e3) {
+                        e3.printStackTrace();
                     }
-                    con.close();
-
-
-                } catch (Exception e3) {
-
-                    JOptionPane.showMessageDialog(this, e3.getMessage());
-
                 }
             }
 
